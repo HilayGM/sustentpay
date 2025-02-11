@@ -2,3 +2,36 @@ this is a preview
 
 
 git reset --soft HEAD~1
+
+
+
+
+primero crear la base con esta tabla 
+CREATE TABLE os_layout (
+    clave INT NOT NULL AUTO_INCREMENT,
+    identificador INT,
+    nombre CHAR(80),
+    ap_paterno CHAR(50),
+    ap_materno CHAR(50),
+    calle VARCHAR(80),
+    no_ext VARCHAR(5),
+    letra VARCHAR(5),
+    no_int VARCHAR(5),
+    clave_col SMALLINT,
+    nombre_colonia VARCHAR(50),
+    referencia VARCHAR(20),
+    tipo SMALLINT,
+    nombre_tipo VARCHAR(50),   
+    tipo_contrato SMALLINT,
+    nombre_contrato VARCHAR(50),
+    tipo_cobro SMALLINT,
+    nombre_tipo_cobro VARCHAR(50),
+    clave_ten SMALLINT,
+    nombre_tenencia VARCHAR(50),
+    nombre_comercial VARCHAR(50),
+    imagen VARCHAR(50),
+    estado CHAR(1),
+    usuario VARCHAR(15),
+    fecha DATETIME,
+    PRIMARY KEY (clave)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
