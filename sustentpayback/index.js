@@ -1,14 +1,14 @@
 const express = require("express")
 const cors = require("cors")
-const userRoutes = require("./routes/user.routes.js")
+const authRoutes = require("./routes/auth.routes")
 
 const app = express()
 
-// Configuración más permisiva de CORS para desarrollo
+// Configuración de CORS más permisiva para desarrollo
 app.use(
   cors({
-    origin: "*", // En producción, especifica los orígenes permitidos
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 )
@@ -17,29 +17,24 @@ app.use(express.json())
 
 // Middleware para logging
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`)
+  console.log(`${req.method} ${req.path}`)
   next()
 })
 
 // Rutas
-app.use("/api/users", userRoutes)
+app.use("/api/auth", authRoutes)
 
-// Ruta de prueba
-app.get("/", (req, res) => {
-  res.json({ message: "API funcionando correctamente" })
-})
-
-const PORT = process.env.PORT || 3000
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`)
-})
-
-// Manejo de errores global
+// Manejador de errores
 app.use((err, req, res, next) => {
-  console.error("Error:", err)
+  console.error(err.stack)
   res.status(500).json({
-    message: "Error en el servidor",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined,
+    success: false,
+    message: "Error interno del servidor",
   })
+})
+
+const PORT = 3000
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })
 

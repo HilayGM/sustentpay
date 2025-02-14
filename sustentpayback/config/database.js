@@ -1,33 +1,19 @@
 const mysql = require("mysql2")
 
-const config = {
+const connection = mysql.createConnection({
   host: "localhost",
-  user: "root", // Ajusta según tu configuración
-  password: "", // Ajusta según tu configuración
-  database: "sustentpay",
-  port: 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-}
-
-console.log("Configuración de base de datos:", {
-  ...config,
-  password: "****", // Ocultamos la contraseña en los logs
+  user: "root",
+  password: "", // Asegúrate de que esto coincida con tu configuración de XAMPP
+  database: "sistema_pagos",
 })
 
-const pool = mysql.createPool(config)
-const promisePool = pool.promise()
+connection.connect((err) => {
+  if (err) {
+    console.error("Error conectando a la base de datos:", err)
+    return
+  }
+  console.log("Conexión a la base de datos establecida")
+})
 
-// Probar la conexión
-promisePool
-  .query("SELECT 1")
-  .then(() => {
-    console.log("Conexión a la base de datos establecida correctamente")
-  })
-  .catch((err) => {
-    console.error("Error al conectar con la base de datos:", err)
-  })
-
-module.exports = promisePool
+module.exports = connection.promise()
 
