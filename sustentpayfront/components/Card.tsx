@@ -3,6 +3,7 @@ import { router } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
 
 interface CardProps {
+  clave: number
   address: string
   owner: string
   colony: string
@@ -10,12 +11,12 @@ interface CardProps {
   commercial?: string
 }
 
-export function Card({ address, owner, colony, reference, commercial }: CardProps) {
+export function Card({ clave, address, owner, colony, reference, commercial }: CardProps) {
   return (
-    <TouchableOpacity style={styles.card} onPress={() => router.push("/details")}>
+    <TouchableOpacity style={styles.card} onPress={() => router.push(`../details/${clave}`)}>
       <View style={styles.headerRow}>
         <Text style={styles.address}>{address}</Text>
-        <Ionicons name="chevron-forward" size={24} color="#6B7280" />
+        <Ionicons name="chevron-forward" size={24} color="#2F9E44" />
       </View>
       <View style={styles.info}>
         <Text style={styles.label}>Propietario:</Text>
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     flex: 1,
+    color: "#2F9E44",
   },
   info: {
     marginBottom: 8,

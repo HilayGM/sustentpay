@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from "react-native"
+import { ScrollView, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native"
 import { router } from "expo-router"
 
 const API_URL = "http://localhost:3000/api"
@@ -65,7 +65,7 @@ export default function NewUser() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.form}>
+      <View style={styles.content}>
         <Text style={styles.title}>Nuevo Usuario</Text>
 
         <Text style={styles.label}>Nombre *</Text>
@@ -162,16 +162,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F3F4F6",
   },
-  form: {
+  content: {
     padding: 20,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    margin: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    paddingBottom: 40,
   },
   title: {
     fontSize: 24,

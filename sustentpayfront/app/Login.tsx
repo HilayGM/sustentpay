@@ -4,11 +4,9 @@ import { useState } from "react"
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from "react-native"
 import { router } from "expo-router"
 
-
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-///esto se cambia por lo de la base de datos 
 
   const handleLogin = () => {
     if (username === "h" && password === "1234") {
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    backgroundColor: "#4F46E5",
+    backgroundColor: "#2F9E44",
     padding: 40,
     alignItems: "center",
   },
@@ -69,12 +67,13 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "#E5E7EB",
+    backgroundColor: "#F3F4F6",
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
   },
   button: {
-    backgroundColor: "#4F46E5",
+    backgroundColor: "#2F9E44",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
