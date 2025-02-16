@@ -27,7 +27,7 @@ export default function Home() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/users")
+      const response = await fetch("http://localhost:8000/api/users")
       const data = await response.json()
       setUsers(data)
     } catch (error) {

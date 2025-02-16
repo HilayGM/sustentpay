@@ -1,10 +1,10 @@
-const express = require("express")
-const cors = require("cors")
-const authRoutes = require("./src/routes/auth.routes")
+import express from "express"
+import cors from "cors"
+import authRoutes from "./routes/auth.routes" // Corregido: cambiado de "../routes/auth.routes"
+import userRoutes from "./routes/user.routes" // Corregido: cambiado de "../routes/user.routes"
 
 const app = express()
 
-// Configuración de CORS más permisiva para desarrollo
 app.use(
   cors({
     origin: "*",
@@ -16,16 +16,17 @@ app.use(
 app.use(express.json())
 
 // Middleware para logging
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
   console.log(`${req.method} ${req.path}`)
   next()
 })
 
 // Rutas
 app.use("/api/auth", authRoutes)
+app.use("/api/users", userRoutes)
 
 // Manejador de errores
-app.use((err, req, res, next) => {
+app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err.stack)
   res.status(500).json({
     success: false,
@@ -33,7 +34,7 @@ app.use((err, req, res, next) => {
   })
 })
 
-const PORT = 8000
+const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })

@@ -1,8 +1,10 @@
-const express = require("express")
-const router = express.Router()
-const db = require("../config/database")
+import { Router, type Request, type Response } from "express"
+import { UserModel } from "../models/user"
+import type { LoginResponse } from "../types"
 
-router.post("/login", async (req, res) => {
+const router = Router()
+
+router.post("/login", async (req: Request, res: Response) => {
   console.log("Body recibido:", req.body)
 
   const { usuario, contraseña } = req.body
@@ -12,24 +14,19 @@ router.post("/login", async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Usuario y contraseña son requeridos",
-    })
+    } as LoginResponse)
   }
 
   try {
-    // Primero verificamos si el usuario existe
-    const [users] = await db.execute("SELECT * FROM os_usuario WHERE usuario = ?", [usuario])
+    const user = await UserModel.findByUsername(usuario)
 
-    console.log("Usuario encontrado:", users[0])
-
-    if (users.length === 0) {
+    if (!user) {
       return res.status(401).json({
         success: false,
         message: "Usuario no encontrado",
-      })
+      } as LoginResponse)
     }
 
-    // Verificamos la contraseña y el estatus
-    const user = users[0]
     if (user.contraseña === contraseña && user.estatus === 1) {
       console.log("Login exitoso para:", user.nombre)
       return res.json({
@@ -38,26 +35,26 @@ router.post("/login", async (req, res) => {
           usuario: user.usuario,
           nombre: user.nombre,
         },
-      })
+      } as LoginResponse)
     } else if (user.estatus !== 1) {
       return res.status(401).json({
         success: false,
         message: "Usuario inactivo",
-      })
+      } as LoginResponse)
     } else {
       return res.status(401).json({
         success: false,
         message: "Contraseña incorrecta",
-      })
+      } as LoginResponse)
     }
   } catch (error) {
     console.error("Error en login:", error)
     res.status(500).json({
       success: false,
       message: "Error en el servidor",
-    })
+    } as LoginResponse)
   }
 })
 
-module.exports = router
+export default router
 

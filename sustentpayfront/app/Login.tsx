@@ -1,13 +1,34 @@
 "use client"
 
 import { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from "react-native"
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Alert,
+  ActivityIndicator,
+  Platform,
+} from "react-native"
 import { router } from "expo-router"
+
+// Función para obtener la URL base según la plataforma
+const getBaseUrl = () => {
+  if (Platform.OS === "android") {
+    return "http://localhost:3000" // Para emulador Android
+  } else if (Platform.OS === "ios") {
+    return "http://localhost:3000" // Para simulador iOS
+  }
+  return "http://localhost:3000" // Fallback para web
+}
 
 export default function Login() {
   const [usuario, setUsuario] = useState("")
   const [contraseña, setContraseña] = useState("")
   const [loading, setLoading] = useState(false)
+  const baseUrl = getBaseUrl()
 
   const handleLogin = async () => {
     if (!usuario || !contraseña) {
@@ -19,8 +40,9 @@ export default function Login() {
 
     try {
       console.log("Intentando login con:", { usuario, contraseña })
+      console.log("URL del servidor:", `${baseUrl}/api/auth/login`)
 
-      const response = await fetch("http://localhost:3000/api/auth/login", {
+      const response = await fetch(`${baseUrl}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
