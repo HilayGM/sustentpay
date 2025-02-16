@@ -1,4 +1,5 @@
 primero crear la base con esta tabla 
+
 CREATE TABLE os_layout (
     clave INT NOT NULL AUTO_INCREMENT,
     identificador INT,
